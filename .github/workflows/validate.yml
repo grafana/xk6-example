@@ -12,7 +12,7 @@ on:
 jobs:
   validate:
     name: Validate
-    uses: grafana/xk6/.github/workflows/extension-validate.yml@35399afa8ac5fc7742f060c87dac485d74aa25d6 # v1.2.2
+    uses: grafana/xk6/.github/workflows/extension-validate.yml@85233afdbdbff43ba927d474f1404edca0efd562 # v1.2.6
     permissions:
       pages: write
       id-token: write
@@ -23,4 +23,4 @@ jobs:
       golangci-lint-version: "v2.1.6"
       platforms: '["ubuntu-latest", "windows-latest", "macos-latest"]'
       k6-versions: '["v1.3.0", "v1.0.0"]'
-      xk6-version: "1.2.2"
+      xk6-version: "1.2.6"
