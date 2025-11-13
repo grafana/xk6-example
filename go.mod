@@ -3,7 +3,7 @@ module github.com/grafana/xk6-example
 go 1.24.0
 
 require (
-	github.com/grafana/sobek v0.0.0-20250723111835-dd8a13f0d439
+	github.com/grafana/sobek v0.0.0-20251112160923-0a6e37e05506
 	github.com/stretchr/testify v1.11.1
 	go.k6.io/k6 v1.3.0
 )
@@ -11,7 +11,7 @@ require (
 require (
 	github.com/cenkalti/backoff/v5 v5.0.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/dlclark/regexp2 v1.11.4 // indirect
+	github.com/dlclark/regexp2 v1.11.5 // indirect
 	github.com/evanw/esbuild v0.25.9 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
