@@ -12,7 +12,7 @@ on:
 jobs:
   validate:
     name: Validate
-    uses: grafana/xk6/.github/workflows/extension-validate.yml@394-add-integration-test-step-to-extension-validate-workflow
+    uses: grafana/xk6/.github/workflows/extension-validate.yml@4102eeec59fbec9afdfc21ab6b0eef44a4a2bf28 # v1.3.1
     permissions:
       pages: write
       id-token: write
