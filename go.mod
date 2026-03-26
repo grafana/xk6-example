@@ -3,7 +3,7 @@ module github.com/grafana/xk6-example
 go 1.24.0
 
 require (
-	github.com/grafana/sobek v0.0.0-20260121195222-d8d9202018c5
+	github.com/grafana/sobek v0.0.0-20260309140132-c198b3f43d96
 	github.com/stretchr/testify v1.11.1
 	go.k6.io/k6 v1.6.1
 )
