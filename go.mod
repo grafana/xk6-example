@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/grafana/sobek v0.0.0-20260219184149-bdae4a158e94
 	github.com/stretchr/testify v1.11.1
-	go.k6.io/k6 v1.7.0
+	go.k6.io/k6 v1.7.1
 )
 
 require (
