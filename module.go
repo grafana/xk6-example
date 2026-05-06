@@ -1,7 +1,7 @@
 // Package example contains the xk6-example extension.
 package example
 
-import "go.k6.io/k6/js/modules"
+import "go.k6.io/k6/v2/js/modules"
 
 type rootModule struct{}
 
