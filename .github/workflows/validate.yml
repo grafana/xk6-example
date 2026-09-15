@@ -10,15 +10,38 @@ on:
     branches: ["main", "master"]
 
 jobs:
+  k6-ci:
+    name: k6 CI
+    uses: grafana/k6-ci/.github/workflows/all.yml@41aaf8e365b56fd120b0396beae2eba3969babab # v0.5.1
+    permissions:
+      contents: read
+    with:
+      k6-ci-ref: 41aaf8e365b56fd120b0396beae2eba3969babab # v0.5.1
+
   configure:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       current: ${{ steps.go-versions.outputs.current }}
-      prev: ${{ steps.go-versions.outputs.prev }}
+      golangci-lint: ${{ steps.golangci-lint.outputs.version }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
       - name: Resolve Go versions
         id: go-versions
         uses: grafana/k6-ci/.github/actions/go-versions@41aaf8e365b56fd120b0396beae2eba3969babab # v0.5.1
+      - name: Resolve golangci-lint version
+        id: golangci-lint
+        shell: bash
+        run: |
+          ref=$(grep -oE 'grafana/k6-ci/[^@[:space:]]+@[A-Za-z0-9._/-]+' \
+            .github/workflows/validate.yml | head -n1 | cut -d@ -f2)
+          version=$(curl --silent --show-error --fail --no-location \
+            "https://raw.githubusercontent.com/grafana/k6-ci/${ref}/.golangci.yml" | head -n1 | tr -d '# ')
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
   validate:
     name: Validate
@@ -30,9 +53,11 @@ jobs:
       contents: read
     with:
       go-version: ${{ needs.configure.outputs.current }}
-      go-versions: '["${{ needs.configure.outputs.prev }}", "${{ needs.configure.outputs.current }}"]'
-      golangci-lint-version: "v2.7.1"
-      platforms: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+      # k6-ci owns the standard Go/OS matrix; retain xk6's macOS-specific
+      # validation and integration coverage without repeating that matrix.
+      go-versions: '["${{ needs.configure.outputs.current }}"]'
+      golangci-lint-version: ${{ needs.configure.outputs.golangci-lint }}
+      platforms: '["macos-latest"]'
       k6-versions: '["v2.0.0-rc1"]'
       xk6-version: "1.4.1"
       xk6-test-pattern: "test/*.test.{j,t}s"
