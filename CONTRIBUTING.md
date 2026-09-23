@@ -117,12 +117,10 @@ govulncheck ./...
 
 ### lint - Run the linter
 
-Use the [golangci-lint] tool with the shared configuration from the k6-ci version pinned in the validation workflow. It is recommended to run this tool before committing changes. Use the [xk6] `lint` subcommand for k6 extension specific analysis.
+Use the [golangci-lint] tool for static code analysis. It is recommended to run this tool before committing changes. Use the [xk6] `lint` subcommand for k6 extension specific analysis.
 
 ```bash
-K6_CI_REF=$(grep -oE 'grafana/k6-ci/[^@[:space:]]+@[A-Za-z0-9._/-]+' .github/workflows/validate.yml | head -n1 | cut -d@ -f2)
-curl -fsSL "https://raw.githubusercontent.com/grafana/k6-ci/${K6_CI_REF}/.golangci.yml" -o .golangci.yml
-go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(head -n1 .golangci.yml | tr -d '# ') run --config=.golangci.yml ./...
+golangci-lint run ./...
 xk6 lint
 ```
 
@@ -207,7 +205,7 @@ cdo --makefile Makefile
 Delete the work files created in the work directory (also included in `.gitignore`).
 
 ```bash
-rm -rf ./k6 ./coverage.txt ./build ./node_modules ./bun.lockb ./.golangci.yml
+rm -rf ./k6 ./coverage.txt ./build ./node_modules ./bun.lockb
 ```
 
 [clean]: #clean---clean-the-working-directory
