@@ -35,7 +35,7 @@ build:
 .PHONY: clean
 clean: 
 	@(\
-		rm -rf ./k6 ./coverage.txt ./build ./node_modules ./bun.lockb ./.golangci.yml;\
+		rm -rf ./k6 ./coverage.txt ./build ./node_modules ./bun.lockb;\
 	)
 
 # Generate API documentation
@@ -63,9 +63,7 @@ it:
 .PHONY: lint
 lint: 
 	@(\
-		K6_CI_REF=$$(grep -oE 'grafana/k6-ci/[^@[:space:]]+@[A-Za-z0-9._/-]+' .github/workflows/validate.yml | head -n1 | cut -d@ -f2);\
-		curl -fsSL "https://raw.githubusercontent.com/grafana/k6-ci/$${K6_CI_REF}/.golangci.yml" -o .golangci.yml;\
-		go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$$(head -n1 .golangci.yml | tr -d '# ') run --config=.golangci.yml ./...;\
+		golangci-lint run ./...;\
 		xk6 lint;\
 	)
 
@@ -97,3 +95,4 @@ test:
 	@(\
 		go test -count 1 -race -coverprofile=coverage.txt -timeout 60s ./...;\
 	)
+
